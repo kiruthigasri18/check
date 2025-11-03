@@ -1,0 +1,292 @@
+"sheath dress" →  fan out queries>>10 variations (work, formal, budget, petite, wedding, summer, etc.)
+"best headlamp on the market" → 10 variations (camping, waterproof, rechargeable, budget, running, etc.)
+So the SCOPE script is basically documenting the AI's query transformation logic so they can study and improve how user searches get automatically expanded to provide better, more comprehensive results
+outcome 
+Session ID	Query	Status	Fan-Out Queries	Pivots
+4340e61d...	sheath dress	
+Success
+5 queries	5 pivots
+bbb1614c...	best headlamp on the market	
+Success
+5 queries	5 pivots
+
+detailed view 
+
+sheath dress
+ID: 4340e61d-f5f4-4f12-94c7-fba1650b88f0
+
+Fan-Out Queries (5)
+1.
+best sheath dresses for work reviews
+2.
+top-rated sheath dresses for formal occasions reviews
+3.
+affordable sheath dresses under $100 reviews
+4.
+best sheath dresses for petite women reviews
+5.
+most stylish sheath dresses for weddings reviews
+
+Generated Pivots (5)
+Work-Appropriate Sheath Dresses
+sheath dresses for work
+
+Formal Sheath Dresses
+formal sheath dresses
+
+Budget-Friendly Sheath Dresses
+affordable sheath dresses
+
+Seasonal Sheath Dresses
+summer sheath dresses
+
+Designer Sheath Dresses
+designer sheath dresses
+
+best headlamp on the market
+ID: bbb1614c-3ee3-4f1f-8ad7-3c3b82704ea4
+
+Fan-Out Queries (5)
+1.
+best headlamps for camping reviews
+2.
+most durable headlamps for outdoor adventures reviews
+3.
+best rechargeable headlamps 2025 reviews
+4.
+top-rated waterproof headlamps reviews
+5.
+best budget headlamps under $50 reviews
+Generated Pivots (5)
+Camping and Outdoor Headlamps
+best headlamps for camping
+
+Waterproof and Weatherproof Headlamps
+best waterproof headlamps
+
+Rechargeable Headlamps
+best rechargeable headlamps
+
+Running and Fitness Headlamps
+best headlamps for running
+
+High-Lumen Headlamps
+most powerful headlamps with high lumens
+
+Total Sessions
+2
+
+Success Rate
+100%
+
+Total Queries Generated
+10
+
+
+File Type	Typical SCOPE Method
+TSV/CSV	SSTREAM or EXTRACT ... USING Extractors.Tsv()	Input = SSTREAM @"/file.tsv";
+
+Parquet	EXTRACT ... USING Extractors.Parquet()	Input = EXTRACT * FROM @"/file.parquet" USING Extractors.Parquet();
+
+JSON	EXTRACT ... USING Extractors.Json()	Input = EXTRACT record string FROM @"/file.json" USING Extractors.Json();
+
+
+
+
+sheath dress
+4340e61d-f5f4-4f12-94c7-fba1650b88f0
+Success
+
+Fan-Out Queries (10)
+1
+best sheath dresses for work reviews
+2
+top-rated sheath dresses for formal occasions reviews
+3
+affordable sheath dresses under $100 reviews
+4
+best sheath dresses for petite women reviews
+5
+most stylish sheath dresses for weddings reviews
+6
+best sheath dresses for summer reviews
+7
+editor's picks for sheath dresses 2025 reviews
+8
+best sheath dresses for curvy women reviews
+9
+minimalist sheath dresses for everyday wear reviews
+10
+best designer sheath dresses reviews
+
+Generated Pivots (5)
+Work-Appropriate Sheath Dresses
+Explore sheath dresses that are perfect for professional settings, offering a balance of style and sophistication.
+
+Query:
+sheath dresses for work
+Formal Sheath Dresses
+Discover the best sheath dresses for formal events, including weddings, galas, and cocktail parties.
+
+Query:
+formal sheath dresses
+Budget-Friendly Sheath Dresses
+Find stylish sheath dresses that fit within a budget, without compromising on quality or design.
+
+Query:
+affordable sheath dresses
+Seasonal Sheath Dresses
+Browse lightweight and breathable sheath dresses designed for summer wear.
+
+Query:
+summer sheath dresses
+Designer Sheath Dresses
+Explore high-end sheath dresses from top fashion designers, perfect for making a statement.
+
+Query:
+designer sheath dresses
+best headlamp on the market
+bbb1614c-3ee3-4f1f-8ad7-3c3b82704ea4
+Success
+
+Fan-Out Queries (10)
+1
+best headlamps for camping reviews
+2
+most durable headlamps for outdoor adventures reviews
+3
+best rechargeable headlamps 2025 reviews
+4
+top-rated waterproof headlamps reviews
+5
+best budget headlamps under $50 reviews
+6
+best headlamps for running at night reviews
+7
+best lightweight headlamps for hiking reviews
+8
+most powerful headlamps with high lumens reviews
+9
+best headlamps for mechanics and work use reviews
+10
+editor's picks for best headlamps 2025 reviews
+
+Generated Pivots (7)
+Camping and Outdoor Headlamps
+Discover headlamps designed for camping and outdoor activities, offering durability, brightness, and long battery life.
+
+Query:
+best headlamps for camping
+Waterproof and Weatherproof Headlamps
+Explore headlamps that can withstand rain and harsh weather conditions, ideal for outdoor enthusiasts.
+
+Query:
+best waterproof headlamps
+Rechargeable Headlamps
+Find headlamps with rechargeable batteries, offering convenience and eco-friendliness for frequent use.
+
+Query:
+best rechargeable headlamps
+Running and Fitness Headlamps
+Check out lightweight and secure headlamps designed for runners and fitness enthusiasts.
+
+Query:
+best headlamps for running
+High-Lumen Headlamps
+Browse headlamps with high lumen output for maximum brightness, suitable for dark environments and professional use.
+
+Query:
+most powerful headlamps with high lumens
+Budget-Friendly Headlamps
+Explore affordable headlamps that offer great value without compromising on essential features.
+
+Query:
+best budget headlamps under $50
+Work and Professional Use Headlamps
+Find headlamps tailored for mechanics and professionals, offering hands-free lighting and durability.
+
+Query:
+best headlamps for mechanics
+Total Sessions
+2
+
+Total Queries
+20
+
+Total Pivots
+12
+
+Success Rate
+100%
+
+
+ Main Purpose: Extract Fan-Out Queries from JSON Data
+Step-by-Step Breakdown:
+1️⃣ Setup & Input
+scope#DECLARE InputData string = @"/local/users/v-kcp/Data.ss";
+InputData = SSTREAM @InputData;
+
+Reading the CSV file you showed me (Data.ss)
+SSTREAM = structured stream reader
+
+2️⃣ Custom Processing with C# Processor
+scopeQueryFanoutOnly = PROCESS InputData
+    PRODUCE Query string, FanoutQueries string
+    USING QueryFanoutProcessor();
+
+Takes each row from the CSV
+Applies the QueryFanoutProcessor (custom C# class)
+Produces 2 columns: Query and FanoutQueries
+
+3️⃣ The C# Processor Logic (the meat of the operation)
+The QueryFanoutProcessor class:
+
+Parses the JSON from the "session" column:
+
+csharp   JObject root = JObject.Parse(jsonText);
+
+Extracts the main query:
+
+csharp   var query = execStore.SelectToken("InputKey.Value")?.ToString()
+   // Gets "sheath dress" or "best headlamp on the market"
+
+Extracts fan-out queries array:
+
+csharp   var fanoutArr = execStore.SelectToken("FanOutQueryResult.FanOutQueries")
+   // Gets the array of 10 queries
+
+Serializes to JSON string:
+
+csharp   fanoutSerialized = JsonConvert.SerializeObject(fanoutArr)
+   // Converts to: ["query1", "query2", ...]
+4️⃣ Output
+scopeOUTPUT QueryFanoutOnly TO "/local/users/v-kcp/Oct29/FanoutQueries_final.tsv"
+
+Saves as TSV (tab-separated values) file
+With headers
+
+
+🎯 What They're Accomplishing:
+Input (Your CSV):
+sessionIsSucceeded{huge JSON blob with nested data}True
+Output (Their TSV):
+QueryFanoutQueriessheath dress["best sheath dresses for work reviews", "top-rated sheath dresses for formal occasions reviews", ...]best headlamp on the market["best headlamps for camping reviews", "most durable headlamps for outdoor adventures reviews", ...]
+
+💡 Why They're Doing This:
+
+Data Simplification - Extracting only the relevant parts (query + fan-out queries) from complex nested JSON
+Flat Structure - Converting nested JSON into a simple 2-column table
+Analysis Ready - TSV format is easier to analyze, join with other datasets, or feed into other pipelines
+Query Expansion Analysis - Probably analyzing how their system expands user queries into multiple search variations
+
+
+🔍 The Commented Code at Bottom:
+The commented sections show they were experimenting with:
+
+Reading domain/brand data
+Converting TXT files to TSV
+Authority/classification analysis
+Various data transformations
+
+These are likely previous iterations or other related tasks they're working on.
+TL;DR: They're flattening complex nested JSON data into a simple table format to analyze how user queries get expanded into multiple related search queries.
