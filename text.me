@@ -1,0 +1,236 @@
+# Movie Booking System - PowerShell Commands with Beautiful Output
+
+## 🚀 Start Server (First PowerShell Window)
+
+```powershell
+cd C:\Users\Kiruthiga\Desktop\Check
+.venv\Scripts\Activate.ps1
+uvicorn main:app --reload
+```
+
+---
+
+## 🎬 MOVIES
+
+### Create Movie with Formatted Output
+```powershell
+$movieBody = @{
+    title = "Thupakki"
+    duration_minutes = 148
+    genre = "action"
+    description = "An army officer takes on a terrorist organization"
+    rating = "PG-13"
+} | ConvertTo-Json
+
+$movie = Invoke-RestMethod -Uri "http://127.0.0.1:8000/movies" -Method Post -Body $movieBody -ContentType "application/json"
+
+# Display formatted output
+Write-Host "`n✅ Movie Created Successfully!" -ForegroundColor Green
+$movie | Format-List
+```
+
+### Get All Movies - Table View
+```powershell
+$movies = Invoke-RestMethod -Uri "http://127.0.0.1:8000/movies" -Method Get
+Write-Host "`n📽️ ALL MOVIES" -ForegroundColor Cyan
+$movies | Format-Table id, title, duration_minutes, genre, rating -AutoSize
+Write-Host "Total Movies: $($movies.Count)" -ForegroundColor Yellow
+```
+
+---
+
+## 🎟️ SHOWTIMES
+
+### Create Showtime with Details
+```powershell
+$showtimeBody = @{
+    movie_id = 1
+    start_time = "2025-09-18T18:30:00"
+    price = 200
+    total_seats = 100
+} | ConvertTo-Json
+
+$showtime = Invoke-RestMethod -Uri "http://127.0.0.1:8000/showtimes" -Method Post -Body $showtimeBody -ContentType "application/json"
+
+Write-Host "`n✅ Showtime Created!" -ForegroundColor Green
+Write-Host "`n📋 SHOWTIME DETAILS:" -ForegroundColor Cyan
+Write-Host "   Movie: $($showtime.movie_title)" -ForegroundColor White
+Write-Host "   Time: $($showtime.start_time)" -ForegroundColor White
+Write-Host "   Price: Rs. $($showtime.price)" -ForegroundColor White
+Write-Host "   Total Seats: $($showtime.total_seats)" -ForegroundColor White
+Write-Host "   Available: $($showtime.available_seats)" -ForegroundColor Green
+Write-Host "   Status: $($showtime.status)" -ForegroundColor Yellow
+```
+
+### Get Showtimes for Specific Movie
+```powershell
+$showtimes = Invoke-RestMethod -Uri "http://127.0.0.1:8000/movies/1/showtimes" -Method Get
+Write-Host "`n🎬 SHOWTIMES FOR MOVIE ID 1" -ForegroundColor Cyan
+$showtimes | Format-Table movie_title, start_time, price, available_seats, total_seats, status -AutoSize
+```
+
+### Check Seat Availability - All Showtimes
+```powershell
+$availability = Invoke-RestMethod -Uri "http://127.0.0.1:8000/showtimes/availability" -Method Get
+Write-Host "`n💺 SEAT AVAILABILITY - ALL SHOWTIMES" -ForegroundColor Cyan
+
+foreach ($show in $availability) {
+    Write-Host "`n------------------------------------------------------------" -ForegroundColor Gray
+    Write-Host "Showtime ID: $($show.showtime_id)" -ForegroundColor Yellow
+    Write-Host "Movie: $($show.movie_title)" -ForegroundColor White
+    Write-Host "Time: $($show.start_time)" -ForegroundColor White
+    Write-Host "Price: Rs. $($show.price)" -ForegroundColor White
+    Write-Host "Available Seats: $($show.available_seats) / $($show.total_seats)" -ForegroundColor Green
+    Write-Host "Occupancy: $($show.occupancy_percentage)%" -ForegroundColor Cyan
+    Write-Host "Status: $($show.status)" -ForegroundColor Magenta
+}
+```
+
+---
+
+## 🎫 BOOKINGS
+
+### Make a Booking with Full Details
+```powershell
+$bookingBody = @{
+    showtime_id = 1
+    customer_name = "Kiruthiga"
+    customer_email = "kiruthiga@email.com"
+    customer_phone = "+919876543210"
+    seats_booked = 2
+} | ConvertTo-Json
+
+$booking = Invoke-RestMethod -Uri "http://127.0.0.1:8000/bookings" -Method Post -Body $bookingBody -ContentType "application/json"
+
+Write-Host "`n✅ BOOKING CONFIRMED!" -ForegroundColor Green
+Write-Host "`n🎫 BOOKING DETAILS:" -ForegroundColor Cyan
+Write-Host "   Booking ID: $($booking.id)" -ForegroundColor Yellow
+Write-Host "   Customer: $($booking.customer_name)" -ForegroundColor White
+Write-Host "   Email: $($booking.customer_email)" -ForegroundColor White
+Write-Host "   Phone: $($booking.customer_phone)" -ForegroundColor White
+Write-Host "   Movie: $($booking.movie_title)" -ForegroundColor White
+Write-Host "   Showtime: $($booking.showtime)" -ForegroundColor White
+Write-Host "   Seats Booked: $($booking.seats_booked)" -ForegroundColor White
+Write-Host "   Price per Seat: Rs. $($booking.price_per_seat)" -ForegroundColor White
+Write-Host "   Total Amount: Rs. $($booking.total_amount)" -ForegroundColor Green
+Write-Host "   Remaining Seats: $($booking.remaining_seats_after_booking)" -ForegroundColor Yellow
+Write-Host "   Status: $($booking.booking_status)" -ForegroundColor Green
+```
+
+### Get All Bookings - Table View
+```powershell
+$bookings = Invoke-RestMethod -Uri "http://127.0.0.1:8000/bookings" -Method Get
+Write-Host "`n🎫 ALL BOOKINGS" -ForegroundColor Cyan
+$bookings | Format-Table id, customer_name, movie_title, seats_booked, total_amount, booking_status -AutoSize
+Write-Host "Total Bookings: $($bookings.Count)" -ForegroundColor Yellow
+
+# Calculate total revenue
+$totalRevenue = ($bookings | Measure-Object -Property total_amount -Sum).Sum
+Write-Host "Total Revenue: Rs. $totalRevenue" -ForegroundColor Green
+```
+
+### Get Specific Booking
+```powershell
+$booking = Invoke-RestMethod -Uri "http://127.0.0.1:8000/bookings/1" -Method Get
+Write-Host "`n🎫 BOOKING #1 DETAILS" -ForegroundColor Cyan
+$booking | Format-List
+```
+
+### Cancel Booking with Details
+```powershell
+$cancel = Invoke-RestMethod -Uri "http://127.0.0.1:8000/bookings/1" -Method Delete
+Write-Host "`n❌ BOOKING CANCELLED" -ForegroundColor Red
+Write-Host "`n📋 CANCELLATION DETAILS:" -ForegroundColor Cyan
+Write-Host "   Booking ID: $($cancel.booking_id)" -ForegroundColor Yellow
+Write-Host "   Seats Returned: $($cancel.seats_returned)" -ForegroundColor Green
+Write-Host "   Available Seats Now: $($cancel.showtime_available_seats)" -ForegroundColor Green
+Write-Host "   Showtime Status: $($cancel.showtime_status)" -ForegroundColor Yellow
+```
+
+---
+
+## 📊 COMPLETE WORKFLOW EXAMPLE
+
+```powershell
+# Step 1: Create Movie
+Write-Host "`n=== STEP 1: Creating Movie ===" -ForegroundColor Cyan
+$movieBody = @{
+    title = "Thupakki"
+    duration_minutes = 148
+    genre = "action"
+} | ConvertTo-Json
+$movie = Invoke-RestMethod -Uri "http://127.0.0.1:8000/movies" -Method Post -Body $movieBody -ContentType "application/json"
+Write-Host "Movie ID: $($movie.id) - $($movie.title)" -ForegroundColor Green
+
+# Step 2: Create Showtime
+Write-Host "`n=== STEP 2: Creating Showtime ===" -ForegroundColor Cyan
+$showtimeBody = @{
+    movie_id = $movie.id
+    start_time = "2025-09-18T18:30:00"
+    price = 200
+    total_seats = 100
+} | ConvertTo-Json
+$showtime = Invoke-RestMethod -Uri "http://127.0.0.1:8000/showtimes" -Method Post -Body $showtimeBody -ContentType "application/json"
+Write-Host "Showtime ID: $($showtime.id) - $($showtime.available_seats) seats available" -ForegroundColor Green
+
+# Step 3: Check Availability
+Write-Host "`n=== STEP 3: Checking Availability ===" -ForegroundColor Cyan
+$availability = Invoke-RestMethod -Uri "http://127.0.0.1:8000/showtimes/availability" -Method Get
+$availability | Format-Table -AutoSize
+
+# Step 4: Make Booking
+Write-Host "`n=== STEP 4: Making Booking ===" -ForegroundColor Cyan
+$bookingBody = @{
+    showtime_id = $showtime.id
+    customer_name = "Kiruthiga"
+    seats_booked = 5
+} | ConvertTo-Json
+$booking = Invoke-RestMethod -Uri "http://127.0.0.1:8000/bookings" -Method Post -Body $bookingBody -ContentType "application/json"
+Write-Host "Booking ID: $($booking.id) - Rs. $($booking.total_amount) paid" -ForegroundColor Green
+Write-Host "Remaining Seats: $($booking.remaining_seats_after_booking)" -ForegroundColor Yellow
+
+# Step 5: View Updated Availability
+Write-Host "`n=== STEP 5: Updated Availability ===" -ForegroundColor Cyan
+$updatedAvailability = Invoke-RestMethod -Uri "http://127.0.0.1:8000/showtimes/availability" -Method Get
+$updatedAvailability | Format-Table -AutoSize
+```
+
+---
+
+## 💡 Tips
+
+- **Save as .ps1 file**: Save any of these scripts as `test_booking.ps1` and run with `.\test_booking.ps1`
+- **Format-Table**: Great for multiple records
+- **Format-List**: Great for single record details
+- **Colors**: Make output easy to read
+- **Variables**: Store responses for further use
+
+---
+
+## 🎨 Custom Formatting Function
+
+```powershell
+function Show-Availability {
+    $availability = Invoke-RestMethod -Uri "http://127.0.0.1:8000/showtimes/availability" -Method Get
+    
+    Write-Host "`n╔════════════════════════════════════════════════════════════╗" -ForegroundColor Cyan
+    Write-Host "║              SEAT AVAILABILITY DASHBOARD                  ║" -ForegroundColor Cyan
+    Write-Host "╚════════════════════════════════════════════════════════════╝" -ForegroundColor Cyan
+    
+    foreach ($show in $availability) {
+        $color = if ($show.status -eq "Available") { "Green" } 
+                 elseif ($show.status -eq "Nearly Full") { "Yellow" }
+                 else { "Red" }
+        
+        Write-Host "`n🎬 $($show.movie_title)" -ForegroundColor White
+        Write-Host "   📅 $($show.start_time)" -ForegroundColor Gray
+        Write-Host "   💰 Rs. $($show.price)" -ForegroundColor Gray
+        Write-Host "   💺 $($show.available_seats)/$($show.total_seats) seats" -ForegroundColor $color
+        Write-Host "   📊 $($show.occupancy_percentage)% full" -ForegroundColor $color
+        Write-Host "   🏷️  Status: $($show.status)" -ForegroundColor $color
+    }
+}
+
+# Use it like this:
+Show-Availability
+```

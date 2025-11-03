@@ -1,0 +1,69 @@
+=== Student Performance Report ===
+
+---- Individual Student Results ----
+Kiruthiga: Avg=75.67, Grade=C, Best=Physics, Worst=English
+Kiran: Avg=71.00, Grade=C, Best=Physics, Worst=English
+Abinaya: Avg=70.33, Grade=C, Best=Math, Worst=English
+Varuni: Avg=75.67, Grade=C, Best=Physics, Worst=Math
+Swathi: Avg=82.00, Grade=B, Best=English, Worst=Math
+Monisha: Avg=78.33, Grade=C, Best=Physics, Worst=Math
+Adlin: Avg=68.67, Grade=D, Best=Math, Worst=English
+Arjun: Avg=68.67, Grade=D, Best=English, Worst=Physics
+Sanjana: Avg=65.00, Grade=D, Best=English, Worst=Math
+Deepak: Avg=61.33, Grade=D, Best=Math, Worst=English
+Harini: Avg=76.33, Grade=C, Best=English, Worst=Physics
+Rohit: Avg=81.33, Grade=B, Best=English, Worst=Math
+Divya: Avg=65.67, Grade=D, Best=Math, Worst=English
+Vignesh: Avg=86.00, Grade=B, Best=English, Worst=Math
+Shruti: Avg=66.33, Grade=D, Best=Math, Worst=Physics
+Naveen: Avg=76.33, Grade=C, Best=Math, Worst=English
+Priya: Avg=72.33, Grade=C, Best=English, Worst=Physics
+Surya: Avg=58.00, Grade=F, Best=Math, Worst=English
+Meera: Avg=77.00, Grade=C, Best=English, Worst=Math
+Ananya: Avg=81.33, Grade=B, Best=Physics, Worst=English
+Rahul: Avg=70.00, Grade=C, Best=Physics, Worst=English
+Lavanya: Avg=64.67, Grade=D, Best=Physics, Worst=English
+Vikram: Avg=76.33, Grade=C, Best=English, Worst=Math
+Preethi: Avg=78.67, Grade=C, Best=English, Worst=Physics
+Akash: Avg=62.00, Grade=D, Best=Math, Worst=English
+Ishwarya: Avg=76.33, Grade=C, Best=Physics, Worst=English
+Siddharth: Avg=63.67, Grade=D, Best=English, Worst=Math
+Sneha: Avg=88.67, Grade=B, Best=Math, Worst=Physics
+Manoj: Avg=84.00, Grade=B, Best=English, Worst=Math
+Kavya: Avg=72.00, Grade=C, Best=Physics, Worst=English
+Rajesh: Avg=77.00, Grade=C, Best=English, Worst=Math
+Bhavya: Avg=93.33, Grade=A, Best=Physics, Worst=Math
+Rakesh: Avg=79.67, Grade=C, Best=English, Worst=Physics
+Aishwarya: Avg=70.67, Grade=C, Best=English, Worst=Physics
+Yash: Avg=87.67, Grade=B, Best=Math, Worst=Physics
+Vaishnavi: Avg=69.33, Grade=D, Best=English, Worst=Math
+Pranav: Avg=75.00, Grade=C, Best=Physics, Worst=English
+Janani: Avg=67.67, Grade=D, Best=English, Worst=Math
+Ajay: Avg=94.00, Grade=A, Best=Physics, Worst=Math
+Pavithra: Avg=63.00, Grade=D, Best=Physics, Worst=English
+Aravind: Avg=84.67, Grade=B, Best=Math, Worst=Physics
+Dhivya: Avg=70.33, Grade=C, Best=Physics, Worst=English
+Karthik: Avg=73.00, Grade=C, Best=Math, Worst=Physics
+Revathi: Avg=72.67, Grade=C, Best=Physics, Worst=Math
+Balaji: Avg=75.67, Grade=C, Best=Physics, Worst=English
+Deeksha: Avg=63.00, Grade=D, Best=Math, Worst=Physics
+Sathish: Avg=84.67, Grade=B, Best=English, Worst=Math
+Nithya: Avg=89.00, Grade=B, Best=Math, Worst=Physics
+Vinoth: Avg=76.33, Grade=C, Best=Physics, Worst=English
+Sindhu: Avg=56.67, Grade=F, Best=Math, Worst=English
+
+---- Class Analysis ----
+Subject Averages:
+Math: 72.92
+Physics: 76.62
+English: 73.48
+
+Highest Class Average Subject: Physics
+
+Students Above Class Average Per Subject:
+Math: 27 students
+Physics: 27 students
+English: 25 students
+
+Students Needing Help (avg < 75):
+Kiran, Abinaya, Adlin, Arjun, Sanjana, Deepak, Divya, Shruti, Priya, Surya, Rahul, Lavanya, Akash, Siddharth, Kavya, Aishwarya, Vaishnavi, Janani, Pavithra, Dhivya, Karthik, Revathi, Deeksha, Sindhu

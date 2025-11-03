@@ -1,0 +1,46 @@
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
+ & C:/Users/Kiruthiga/Desktop/Check/.venv/Scripts/Activate.ps1
+uvicorn main:app --reload
+
+
+$movieBody = @{
+    title = "Thupakki"
+    duration_minutes = 148
+    genre = "action"
+} | ConvertTo-Json
+
+Invoke-RestMethod -Uri "http://127.0.0.1:8000/movies" -Method Post -Body $movieBody -ContentType "application/json"
+
+
+
+$showtimeBody = @{
+    movie_id = 1
+    start_time = "2025-09-18T18:30:00"
+    price = 200
+} | ConvertTo-Json
+
+Invoke-RestMethod -Uri "http://127.0.0.1:8000/showtimes" -Method Post -Body $showtimeBody -ContentType "application/json"
+
+
+
+Invoke-RestMethod -Uri "http://127.0.0.1:8000/movies/1/showtimes" -Method Get
+
+
+
+$bookingBody = @{
+    showtime_id = 1
+    customer_name = "kiruthiga "
+    seats_booked = 2
+} | ConvertTo-Json
+
+Invoke-RestMethod -Uri "http://127.0.0.1:8000/bookings" -Method Post -Body $bookingBody -ContentType "application/json"
+
+
+
+Invoke-RestMethod -Uri "http://127.0.0.1:8000/bookings/1" -Method Get
+
+
+Invoke-RestMethod -Uri "http://127.0.0.1:8000/bookings/1" -Method Delete
+
+
+http://127.0.0.1:8000/docs
